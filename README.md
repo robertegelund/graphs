@@ -1,4 +1,4 @@
-﻿# Classes with methods for three different graphs are implemented
+﻿# Three different graphs with several methods are implemented
  - Simple graph
  - Acyclic Directed Graph
  - Weighted graph
