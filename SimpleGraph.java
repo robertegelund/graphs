@@ -84,8 +84,5 @@ class SimpleGraph<E> {
         g.addEdge("a", "c");
 
         g.printStructure();
-
-        // Set<SimpleGraph<String>> visited = new HashSet<>();
-        // // g.bfsVisit(g.getNode("a"), visited);
     }
 }
