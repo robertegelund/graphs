@@ -21,7 +21,7 @@ public class DAG<E> extends SimpleGraph<E> {
         return stack;
     }
 
-    //Depth first search adjusted for dfsTopSort
+    //Depth first traversal adjusted for dfsTopSort
     void dfsVisit(E u, Set<E> visited, Stack<E> stack) {
         visited.add(u);
         for(E v : graph.get(u)) {
