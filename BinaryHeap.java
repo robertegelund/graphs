@@ -12,6 +12,10 @@ class BinaryHeap<E extends Comparable<E>> {
         return removeMin(arr);
     }
 
+    public int size() {
+        return arr.size();
+    }
+
     private void add(List<E> arr, E x) {
         int n = arr.size();
         arr.add(x);

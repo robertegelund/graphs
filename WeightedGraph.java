@@ -19,13 +19,26 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         graph.get(neighbourNode).put(currentNode, weight);
     }
 
-    //TODO: Implement the rest of the Dijkstra method
-    Map<E, Integer> dijkstra(E s) {
+    Map<E, Integer> dijkstra(E s, int weightLimit) {
         Map<E, Integer> dist = new HashMap<>();
         BinaryHeap<E> queue = new BinaryHeap<>();
         queue.add(s); dist.put(s, 0);
 
-        return null;
+        while(queue.size() != 0) {
+            E u = queue.removeMin();
+            for(E v : graph.get(u).keySet()) {
+                int c = dist.get(u) + graph.get(u).get(v);
+                if(!dist.containsKey(v)) {
+                    dist.put(v, weightLimit);
+                }
+                if(c < dist.get(v)) {
+                    dist.put(v, c);
+                    queue.add(v);
+                }
+            }
+        }
+
+        return dist;
     } 
 
     int getWeight(String u, String v) {
