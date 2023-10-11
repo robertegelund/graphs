@@ -9,6 +9,7 @@ public class DAG<E> extends SimpleGraph<E> {
         graph.get(getNode(current)).add(getNode(neighbour));
     }
     
+    //Depth first topological sorting
     Stack<E> dfsTopSort() {
         Stack<E> stack = new Stack<>();
         Set<E> visited = new HashSet<>();
@@ -20,6 +21,7 @@ public class DAG<E> extends SimpleGraph<E> {
         return stack;
     }
 
+    //Depth first search adjusted for dfsTopSort
     void dfsVisit(E u, Set<E> visited, Stack<E> stack) {
         visited.add(u);
         for(E v : graph.get(u)) {

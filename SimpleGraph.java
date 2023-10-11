@@ -9,6 +9,7 @@ class SimpleGraph<E> {
     Map<String, E> nodes = new HashMap<>();
     Map<E, Set<E>> graph = new HashMap<>();
 
+    //Depth first search
     void dfsVisit(E s, Set<E> visited) {
         visited.add(s);
         for(E v : graph.get(s)) {
@@ -18,6 +19,7 @@ class SimpleGraph<E> {
         }
     }
 
+    //Breadth first search
     void bfsVisit(E s, Set<E> visited) {
         visited.add(s);
         Queue<E> queue = new ArrayDeque<>(); queue.add(s);
