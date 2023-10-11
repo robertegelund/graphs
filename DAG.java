@@ -2,7 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-public class DagGraph<E> extends SimpleGraph<E> {
+public class DAG<E> extends SimpleGraph<E> {
     @Override
     void addEdge(String current, String neighbour) {
         if(!nodes.containsKey(current) || !nodes.containsKey(neighbour)) return; 
