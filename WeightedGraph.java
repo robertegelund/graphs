@@ -32,7 +32,9 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
                     if (val == null) {
                         return c;
                     } else {
-                        return Math.min(val, c);
+                        int min = Math.min(val, c);
+                        if(min < val) queue.add(v); 
+                        return min;
                     }
                 });
             }
