@@ -27,22 +27,48 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         while(queue.size() != 0) {
             E u = queue.removeMin();
             for(E v : graph.get(u).keySet()) {
-                int c = dist.get(u) + graph.get(u).get(v);
-                if(!dist.containsKey(v)) {
-                    dist.put(v, weightLimit);
-                }
-                if(c < dist.get(v)) {
-                    dist.put(v, c);
-                    queue.add(v);
-                }
+                int c = dist.get(u) + getWeight(u, v);
+                dist.putIfAbsent(v, weightLimit);
+                dist.put(v, Math.min(dist.get(v), c));
             }
         }
 
         return dist;
     } 
 
-    int getWeight(String u, String v) {
-        return graph.get(getNode(u)).get(getNode(v));
+    Map<E, Integer> bellmanFord(E s, int weightLimit) {
+        Map<E, Integer> dist = new HashMap<>();
+        dist.put(s, 0);
+
+        for(int i = 0; i < nodes.size(); i++); {
+            updateWeights(dist, weightLimit);
+        }
+
+        for(E u : graph.keySet()) {
+            for(E v : graph.get(u).keySet()) {
+                int c = dist.get(u) + getWeight(u, v);
+                if(c < dist.get(v)) {
+                    throw new IllegalArgumentException("The graph contains a negative cycle!");
+                }
+            }
+        }
+
+        return dist;
+    }
+
+    void updateWeights(Map<E, Integer> dist, int weightLimit) {
+        for(E u : graph.keySet()) {
+            for(E v : graph.get(u).keySet()) {
+                int c = dist.get(u) + getWeight(u, v);
+                dist.putIfAbsent(v, weightLimit);
+                dist.put(v, Math.min(dist.get(v), c));
+            }
+        }
+    }
+
+
+    int getWeight(E u, E v) {
+        return graph.get(u).get(v);
     }
 
     @Override
@@ -61,8 +87,12 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         g.add("a");
         g.add("b");
         g.add("c");
-        g.addEdge("a", "b", 2);
-        g.addEdge("a", "c", 3);
+        g.addEdge("a", "b", 3);
+        g.addEdge("a", "c", 1);
+        g.addEdge("b", "c", 2);
         g.printStructure();
+
+        Map<String, Integer> shortestPath = g.bellmanFord(g.nodes.get("a"), 5);
+        System.out.println(shortestPath);
     }
 }
