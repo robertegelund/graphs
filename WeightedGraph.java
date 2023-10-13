@@ -19,7 +19,7 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         graph.get(neighbourNode).put(currentNode, weight);
     }
 
-    Map<E, Integer> dijkstra(E s, int weightLimit) {
+    Map<E, Integer> dijkstra(E s) {
         Map<E, Integer> dist = new HashMap<>();
         BinaryHeap<E> queue = new BinaryHeap<>();
         queue.add(s); dist.put(s, 0);
@@ -28,20 +28,25 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
             E u = queue.removeMin();
             for(E v : graph.get(u).keySet()) {
                 int c = dist.get(u) + getWeight(u, v);
-                dist.putIfAbsent(v, weightLimit);
-                dist.put(v, Math.min(dist.get(v), c));
+                dist.compute(v, (key, val) -> {
+                    if (val == null) {
+                        return c;
+                    } else {
+                        return Math.min(val, c);
+                    }
+                });
             }
         }
 
         return dist;
     } 
 
-    Map<E, Integer> bellmanFord(E s, int weightLimit) {
+    Map<E, Integer> bellmanFord(E s) {
         Map<E, Integer> dist = new HashMap<>();
         dist.put(s, 0);
 
         for(int i = 0; i < nodes.size(); i++); {
-            updateWeights(dist, weightLimit);
+            updateWeights(dist);
         }
 
         for(E u : graph.keySet()) {
@@ -56,12 +61,17 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         return dist;
     }
 
-    void updateWeights(Map<E, Integer> dist, int weightLimit) {
+    void updateWeights(Map<E, Integer> dist) {
         for(E u : graph.keySet()) {
             for(E v : graph.get(u).keySet()) {
                 int c = dist.get(u) + getWeight(u, v);
-                dist.putIfAbsent(v, weightLimit);
-                dist.put(v, Math.min(dist.get(v), c));
+                dist.compute(v, (key, val) -> {
+                    if (val == null) {
+                        return c;
+                    } else {
+                        return Math.min(val, c);
+                    }
+                });
             }
         }
     }
@@ -92,7 +102,7 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         g.addEdge("b", "c", 2);
         g.printStructure();
 
-        Map<String, Integer> shortestPath = g.bellmanFord(g.nodes.get("a"), 5);
+        Map<String, Integer> shortestPath = g.dijkstra(g.nodes.get("a"));
         System.out.println(shortestPath);
     }
 }
