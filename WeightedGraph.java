@@ -30,11 +30,11 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
                 int c = dist.get(u) + getWeight(u, v);
                 dist.compute(v, (key, val) -> {
                     if (val == null) {
+                        queue.add(v);
                         return c;
                     } else {
-                        int min = Math.min(val, c);
-                        if(min < val) queue.add(v); 
-                        return min;
+                        if(c < val) queue.add(v);
+                        return Math.min(val, c);
                     }
                 });
             }
@@ -78,7 +78,6 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         }
     }
 
-
     int getWeight(E u, E v) {
         return graph.get(u).get(v);
     }
@@ -99,12 +98,18 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         g.add("a");
         g.add("b");
         g.add("c");
+        g.add("d");
+        g.add("e");
         g.addEdge("a", "b", 3);
         g.addEdge("a", "c", 1);
         g.addEdge("b", "c", 2);
+        g.addEdge("c", "e", 2);
+        g.addEdge("b", "e", 3);
         g.printStructure();
 
-        Map<String, Integer> shortestPath = g.dijkstra(g.nodes.get("a"));
-        System.out.println(shortestPath);
+        Map<String, Integer> shortestDijk = g.dijkstra(g.nodes.get("a"));
+        System.out.println(shortestDijk);
+        Map<String, Integer> shortestFord = g.bellmanFord(g.nodes.get("a"));
+        System.out.println(shortestFord);
     }
 }
