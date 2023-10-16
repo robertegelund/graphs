@@ -69,6 +69,7 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         dag.add("e");
         dag.add("f");
         dag.add("g");
+        dag.add("h");
         dag.addEdge("a", "b", 1);
         dag.addEdge("b", "d", 3);
         dag.addEdge("c", "d", 2);
@@ -76,10 +77,12 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         dag.addEdge("d", "e", 1);
         dag.addEdge("e", "f", 2);
         dag.addEdge("b", "g", 2);
+        dag.addEdge("d", "h", 6);
+        dag.addEdge("e", "h", 8);
 
         dag.printStructure();
 
-        Map<String, Integer> shortest = dag.shortestPaths("a");
+        Map<String, Integer> shortest = dag.shortestPaths("b");
         System.out.println(shortest);
 
     }
