@@ -26,12 +26,12 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
 
     void dfsVisit(E u, Set<E> visited, Stack<E> stack) {
         visited.add(u);
+        stack.push(u); //In Java, the last index implies the top of the stack
         for(E v : graph.get(u).keySet()) {
             if(!visited.contains(v)) {
                 dfsVisit(v, visited, stack);
             }           
         }
-        stack.add(0, u);
     }
 
     Map<E, Integer> shortestPaths(E s) {
