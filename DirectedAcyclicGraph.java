@@ -82,10 +82,14 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         dag.add("b");
         dag.add("c");
         dag.add("d");
+        dag.add("e");
+        dag.add("f");
         dag.addEdge("a", "b", 1);
         dag.addEdge("b", "d", 3);
         dag.addEdge("c", "d", 2);
         dag.addEdge("a", "c", 4);
+        dag.addEdge("d", "e", 1);
+        dag.addEdge("e", "f", 2);
 
         dag.printStructure();
 
