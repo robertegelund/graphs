@@ -1,7 +1,7 @@
 import java.util.Map;
 import java.util.HashMap;
 
-public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
+public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
     Map<E, Map<E, Integer>> graph = new HashMap<>();
 
     @Override
@@ -88,7 +88,7 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
     }
 
     public static void main(String[] args) {
-        WeightedGraph<String> g = new WeightedGraph<>();
+        UndirectedWeightedGraph<String> g = new UndirectedWeightedGraph<>();
         g.add("a");
         g.add("b");
         g.add("c");
