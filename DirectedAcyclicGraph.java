@@ -21,6 +21,10 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
                 dfsVisit(u, visited, stack);
             }
         }
+        if(stack.size() != nodes.size()) {
+            throw new IllegalArgumentException("The graph contains a cycle, and cannot be toplogically sorted!");
+        }
+
         return stack;
     }
 
