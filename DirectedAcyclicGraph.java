@@ -28,37 +28,16 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         visited.add(u);
         for(E v : graph.get(u).keySet()) {
             if(!visited.contains(v)) {
-                dfsVisitReversed(v, visited, stack);
-            }            
+                dfsVisit(v, visited, stack);
+            }           
         }
-        stack.push(u);
-    }
-
-     Stack<E> dfsTopSortReversed() {
-        Stack<E> stack = new Stack<>();
-        Set<E> visited = new HashSet<>();
-        for(E u : nodes.values()) {
-            if(!visited.contains(u)) {
-                dfsVisitReversed(u, visited, stack);
-            }
-        }
-        return stack;
-    }
-
-    void dfsVisitReversed(E u, Set<E> visited, Stack<E> stack) {
-        visited.add(u);
-        stack.push(u);
-        for(E v : graph.get(u).keySet()) {
-            if(!visited.contains(v)) {
-                dfsVisitReversed(v, visited, stack);
-            }            
-        }
+        stack.add(0, u);
     }
 
     Map<E, Integer> shortestPaths(E s) {
         Map<E, Integer> dist = new HashMap<>();
         dist.put(s, 0);
-        Stack<E> sorted = dfsTopSortReversed();
+        Stack<E> sorted = dfsTopSort();
         System.out.println(sorted);
 
         for(E u : sorted) {
