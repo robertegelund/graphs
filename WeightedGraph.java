@@ -28,15 +28,11 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
             E u = queue.removeMin();
             for(E v : graph.get(u).keySet()) {
                 int c = dist.get(u) + getWeight(u, v);
-                dist.compute(v, (key, val) -> {
-                    if (val == null) {
-                        queue.add(v);
-                        return c;
-                    } else {
-                        if(c < val) queue.add(v);
-                        return Math.min(val, c);
-                    }
-                });
+                dist.putIfAbsent(v, 1000);
+                if(c < dist.get(v)) {
+                    queue.add(v);
+                    dist.put(v, c);
+                }
             }
         }
 
@@ -47,7 +43,7 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         Map<E, Integer> dist = new HashMap<>();
         dist.put(s, 0);
 
-        for(int i = 0; i < nodes.size(); i++); {
+        for(int i = 1; i < nodes.size(); i++); {
             updateWeights(dist);
         }
 
@@ -66,14 +62,12 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
     void updateWeights(Map<E, Integer> dist) {
         for(E u : graph.keySet()) {
             for(E v : graph.get(u).keySet()) {
+                dist.putIfAbsent(u, 1000);
+                dist.putIfAbsent(v, 1000);
                 int c = dist.get(u) + getWeight(u, v);
-                dist.compute(v, (key, val) -> {
-                    if (val == null) {
-                        return c;
-                    } else {
-                        return Math.min(val, c);
-                    }
-                });
+                if(c < dist.get(v)) {
+                    dist.put(v, c);
+                }
             }
         }
     }
@@ -102,14 +96,14 @@ public class WeightedGraph<E extends Comparable<E>> extends SimpleGraph<E> {
         g.add("e");
         g.addEdge("a", "b", 3);
         g.addEdge("a", "c", 1);
-        g.addEdge("b", "c", 2);
         g.addEdge("c", "e", 2);
-        g.addEdge("b", "e", 3);
+        g.addEdge("b", "e", 1);
         g.printStructure();
 
-        Map<String, Integer> shortestDijk = g.dijkstra(g.nodes.get("a"));
-        System.out.println(shortestDijk);
-        Map<String, Integer> shortestFord = g.bellmanFord(g.nodes.get("a"));
-        System.out.println(shortestFord);
+        Map<String, Integer> shortestDijk = g.dijkstra(g.nodes.get("c"));
+        System.out.println("\n"+shortestDijk);
+        Map<String, Integer> shortestFord = g.bellmanFord(g.nodes.get("c"));
+        System.out.println("\n"+shortestFord);
+        System.out.println();
     }
 }
