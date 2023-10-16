@@ -62,10 +62,10 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         System.out.println(sorted);
 
         for(E u : sorted) {
+            dist.putIfAbsent(u, 1000);
             for(E v : graph.get(u).keySet()) {
-                dist.putIfAbsent(u, 1000);
-                dist.putIfAbsent(v, 1000);
                 int c = dist.get(u) + getWeight(u, v);
+                dist.putIfAbsent(v, 1000);
                 if(c < dist.get(v)) {
                     dist.put(v, c);
                 }

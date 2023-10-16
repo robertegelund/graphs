@@ -61,8 +61,8 @@ public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGrap
 
     void updateWeights(Map<E, Integer> dist) {
         for(E u : graph.keySet()) {
+            dist.putIfAbsent(u, 1000);
             for(E v : graph.get(u).keySet()) {
-                dist.putIfAbsent(u, 1000);
                 dist.putIfAbsent(v, 1000);
                 int c = dist.get(u) + getWeight(u, v);
                 if(c < dist.get(v)) {
