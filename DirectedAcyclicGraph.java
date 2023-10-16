@@ -19,32 +19,33 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         for(E u : nodes.values()) {
             if(!visited.contains(u)) {
                 dfsVisit(u, visited, stack);
-            }
-        }
+
+            }        
+        }        
         if(stack.size() != nodes.size()) {
             throw new IllegalArgumentException("The graph contains a cycle, and cannot be toplogically sorted!");
         }
-
-        return stack;
+        
+        return stack;    
     }
-
+    
     void dfsVisit(E u, Set<E> visited, Stack<E> stack) {
         visited.add(u);
-        stack.push(u); //In Java, the last index implies the top of the stack
         for(E v : graph.get(u).keySet()) {
             if(!visited.contains(v)) {
                 dfsVisit(v, visited, stack);
             }           
         }
+        stack.push(u); //In Java, the last index implies the top of the stack
     }
 
     Map<E, Integer> shortestPaths(E s) {
         Map<E, Integer> dist = new HashMap<>();
         dist.put(s, 0);
         Stack<E> sorted = dfsTopSort();
-        System.out.println(sorted);
 
-        for(E u : sorted) {
+        while(!sorted.isEmpty()) {
+            E u = sorted.pop();
             dist.putIfAbsent(u, 1000);
             for(E v : graph.get(u).keySet()) {
                 int c = dist.get(u) + getWeight(u, v);
@@ -67,12 +68,14 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
         dag.add("d");
         dag.add("e");
         dag.add("f");
+        dag.add("g");
         dag.addEdge("a", "b", 1);
         dag.addEdge("b", "d", 3);
         dag.addEdge("c", "d", 2);
         dag.addEdge("a", "c", 4);
         dag.addEdge("d", "e", 1);
         dag.addEdge("e", "f", 2);
+        dag.addEdge("b", "g", 2);
 
         dag.printStructure();
 
