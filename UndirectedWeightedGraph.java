@@ -65,8 +65,8 @@ public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGrap
         queue.add(new Relation<E, E>(null, nodes.get(arbitraryNode), 0));
 
         while(queue.size() != 0) {
-            Relation<E, E> minWeight = queue.removeMin();
-            E child = minWeight.child, parent = minWeight.parent;
+            Relation<E, E> minEdge = queue.removeMin();
+            E child = minEdge.child, parent = minEdge.parent;
             if(!parents.containsKey(child)) {
                 parents.put(child, parent);
                 for(E neighbour : graph.get(child).keySet()) {
