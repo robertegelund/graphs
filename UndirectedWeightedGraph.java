@@ -37,7 +37,7 @@ public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGrap
         }
 
         return dist;
-    } 
+    }
 
     Map<E, Integer> bellmanFord(E s) {
         Map<E, Integer> dist = new HashMap<>();
@@ -57,6 +57,27 @@ public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGrap
         }
 
         return dist;
+    }
+
+    Map<E, E> prim(String arbitraryNode) {
+        BinaryHeap<Relation<E, E>> queue = new BinaryHeap<>();
+        Map<E, E> parents = new HashMap<>();
+        queue.add(new Relation<E, E>(null, nodes.get(arbitraryNode), 0));
+
+        while(queue.size() != 0) {
+            Relation<E, E> minWeight = queue.removeMin();
+            E child = minWeight.child, parent = minWeight.parent;
+            if(!parents.containsKey(child)) {
+                parents.put(child, parent);
+                for(E neighbour : graph.get(child).keySet()) {
+                    queue.add(
+                        new Relation<E, E>(child, neighbour, graph.get(child).get(neighbour))
+                    );
+                }
+            }
+        }
+
+        return parents;
     }
 
     void updateWeights(Map<E, Integer> dist) {
@@ -93,17 +114,22 @@ public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGrap
         g.add("b");
         g.add("c");
         g.add("d");
-        g.add("e");
         g.addEdge("a", "b", 3);
-        g.addEdge("a", "c", 1);
-        g.addEdge("c", "e", 2);
-        g.addEdge("b", "e", 1);
+        g.addEdge("a", "c", 3);
+        g.addEdge("a", "d", 1);
+        g.addEdge("b", "c", 2);
+        g.addEdge("b", "d", 3);
+        g.addEdge("c", "d", 3);
+        
         g.printStructure();
 
-        Map<String, Integer> shortestDijk = g.dijkstra(g.nodes.get("c"));
-        System.out.println("\n"+shortestDijk);
-        Map<String, Integer> shortestFord = g.bellmanFord(g.nodes.get("c"));
-        System.out.println("\n"+shortestFord);
+        Map<String, String> spenntre = g.prim("a");
+        System.out.println("\n A minimal spanning tree: " + spenntre);
+
+        Map<String, Integer> shortestDijk = g.dijkstra(g.nodes.get("a"));
+        System.out.println("\n Dijkstra: "+shortestDijk);
+        Map<String, Integer> shortestFord = g.bellmanFord(g.nodes.get("a"));
+        System.out.println("\n Bellman Ford: "+shortestFord);
         System.out.println();
     }
 }

@@ -84,7 +84,5 @@ public class DirectedAcyclicGraph<E extends Comparable<E>> extends DirectedWeigh
 
         Map<String, Integer> shortest = dag.shortestPaths("b");
         System.out.println(shortest);
-
     }
-
 }
