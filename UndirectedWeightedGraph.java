@@ -71,7 +71,7 @@ public class UndirectedWeightedGraph<E extends Comparable<E>> extends SimpleGrap
                 parents.put(child, parent);
                 for(E neighbour : graph.get(child).keySet()) {
                     queue.add(
-                        new Relation<E, E>(child, neighbour, graph.get(child).get(neighbour))
+                        new Relation<E, E>(child, neighbour, getWeight(child, neighbour))
                     );
                 }
             }
