@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
-class SimpleGraph<E> {
+class UndirectedUnweighted<E> {
     Map<String, E> nodes = new HashMap<>();
     Map<E, Set<E>> graph = new HashMap<>();
 
@@ -77,7 +77,7 @@ class SimpleGraph<E> {
     }
 
     public static void main(String[] args) {
-        SimpleGraph<String> g = new SimpleGraph<>();
+        UndirectedUnweighted<String> g = new UndirectedUnweighted<>();
 
         g.add("f");
         g.add("d");
