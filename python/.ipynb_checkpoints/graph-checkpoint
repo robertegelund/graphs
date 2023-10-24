@@ -1,0 +1,7 @@
+graph {
+	B
+	B -- A [label=2]
+	C
+	C -- A [label=4]
+	A
+}
