@@ -1,4 +1,4 @@
-# Four different graph types with several methods are implemented in Java
+# Four different graph classes with methods are implemented in Java
  - Undirected Unweighted Graph (Simple graph)
  - Undirected Weighted Graph
  - Directed Weighted Graph
